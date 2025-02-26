@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceu Estrelado</title>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            position: relative;
+        }
+
+        .meiaLua {
+            position: absolute;
+            top: 10vh;
+            left: 60vw;
+            width: 15vw;
+            height: 15vw;
+            border-radius: 50%;
+            background: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+            transform: rotate(-35deg);
+            z-index: 1;
+            filter: blur(1px);
+        }
+
+        .meiaLua::after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #000;
+            position: absolute;
+            top: 0;
+            left: 39%;
+            transform: translateX(-50%);
+            box-shadow: -4px 0 6px rgba(0, 0, 0, 0.5);
+            filter: blur(10px);
+        }
+
+        .estrela {
+            background-color: #fff;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            animation: twinkle 1.5s infinite alternate, shining 2s infinite alternate, colorShift 3s infinite alternate;
+            filter: blur(1px);
+        }
+
+        @keyframes twinkle {
+            0% { 
+                opacity: 0.7; 
+            }
+            40% { 
+                opacity: 0.8; 
+            }
+            80% { 
+                opacity: 0.9; 
+            }
+            100% { 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(0) translateY(0); }
+            30% { transform: translateX(-0.5px) translateY(0.5px); }
+            60% { transform: translateX(0.5px) translateY(-0.5px); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+
+        @keyframes shining {
+            0% { 
+                transform: scale(1); opacity: 0.5; 
+            }
+            30% { 
+                transform: scale(1.3); opacity: 0.8; 
+            }
+            60% { 
+                transform: scale(1); opacity: 0.6; 
+            }
+            90% { 
+                transform: scale(1.5); opacity: 1; 
+            }
+            100% { 
+                transform: scale(1.2); opacity: 0.7; 
+            }
+        }
+
+        @keyframes colorShift {
+            0% { 
+                background-color: #7c70d5;
+             }
+            25% { 
+                background-color: #4246aa;
+             }
+            50% { 
+                background-color: #e6ffed;
+            }
+            75% { 
+                background-color: #030a5d;
+             }
+            100% { 
+                background-color: #d2c6e8; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="meiaLua"></div>
+    <div class="ceu" id="ceu"></div>
+    <script>
+        function ceuEstrelado() {
+            const numEstrelas = 150;
+            const corpo = document.getElementById('ceu');
+
+            for (let i = 0; i < numEstrelas; i++) {
+                const estrela = document.createElement('div');
+                estrela.classList.add('estrela');
+
+                estrela.style.top = `${Math.random() * 100}vh`;
+                estrela.style.left = `${Math.random() * 100}vw`;
+
+                let tamanho = Math.random() * 4 + 2;
+                estrela.style.width = `${tamanho}px`;
+                estrela.style.height = `${tamanho}px`;
+
+                estrela.style.boxShadow = `0 0 ${Math.random() * (tamanho * 2)}px rgba(255, 255, 255, 0.8)`;
+
+                let tempoBrilho = Math.random() * 3 + 0.5;
+                let delay = Math.random() * 6 + 2;
+                estrela.style.animation = `twinkle ${tempoBrilho}s infinite alternate, shining ${tempoBrilho + 1}s infinite alternate, flicker ${tempoBrilho + 1.5}s infinite alternate, colorShift ${tempoBrilho + 3}s infinite alternate`;
+
+                estrela.style.animationDelay = `${delay}s`;
+
+                corpo.appendChild(estrela);
+            }
+        }
+
+        ceuEstrelado();
+    </script>
+</body>
+</html>
